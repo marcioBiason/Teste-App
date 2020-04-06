@@ -1,0 +1,179 @@
+<br>
+<div class="d-flex">
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control mr-2" placeholder="Nome" [(ngModel)]="filtroNome">
+
+      <div class="form-inline mr-auto">
+        <select [(ngModel)]="selectedOption">
+          <option *ngFor="let o of options">
+            {{o.name}}
+          </option>
+        </select>
+      </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-outline-success" (click)="filtrarAtivos()">Filtrar</button>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-outline-primary" (click)="novoUsuario(template)">
+      <i class="fa fa-plus-circle"></i>&nbsp;
+      Cadastrar Novo Usuario
+    </button>
+  </div>
+</div>
+<table class="table table-stripped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th>Data Nascimento</th>
+      <th>E-mail</th>
+      <th>Sexo</th>
+      <th>Ativo</th>
+      <th>Editar</th>
+      <th>Excluir</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="usuarios && usuarios.length">
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{usuario.userId}}</td>
+      <td>{{usuario.nome}}</td>
+      <td>{{usuario.dataNascimento | DateTimeFormatPipe}}</td>
+      <td>{{usuario.email}}</td>
+      <td>{{usuario.sexoId}}</td>
+      <td>{{usuario.ativo == true ? 'Ativo' : 'Inativo'}}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-primary" tooltip="Editar" (click)="editarUsuario(usuario, template)">
+            <i class="fa fa-edit"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="excluirEvento(usuario, confirm)">
+            <i class=" fa fa-eraser"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!usuarios.length">
+    <tr>
+      <td colspan="7" class="text-center">
+        <h4>
+          Nenhum usuario encontrado
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
+<div bsModal #template="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Cadastro</h4>
+        <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm">
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label>Nome</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': registerForm.get('nome').errors && registerForm.get('nome').touched}"
+                formControlName="nome" placeholder="Insira o Nome">
+              <div class="invalid-feedback">
+                O nome é obrigatório e deve conter mais que 3 caracteres.
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label>Data Nascimento</label>
+              <input type="date" class="form-control"
+                [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors && registerForm.get('dataNascimento').touched}"
+                formControlName="dataNascimento" placeholder="Insira a Data Nascimento">
+              <div class="invalid-feedback">
+                A data de nascimento é obrigatória.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>E-mail</label>
+              <input type="text" class="form-control"
+                [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched}"
+                formControlName="email" placeholder="Insira o E-mail">
+              <div class="invalid-feedback">
+                Insira um email válido.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Senha</label>
+              <input type="password" class="form-control"
+                [ngClass]="{'is-invalid': registerForm.get('senha').errors && registerForm.get('senha').touched}"
+                formControlName="senha" placeholder="Senha">
+              <div class="invalid-feedback">
+                Digite uma senha.
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Sexo</label>
+              <select id="sexo" class="form-control">
+                <option value="1">Masculino</option>
+                <option value="4">Feminino</option>
+              </select>
+            </div>
+            <div *ngIf="modoSalvar == 'put'" class="form-group col-md-6">
+              <label>Ativo</label>
+              <select id="ativo" class="form-control">
+                <option value="true">Ativo</option>
+                <option value="false">Inativo</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex">
+        <button class="btn btn-secondary" (click)="template.hide()">
+          Fechar
+        </button>
+        <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="salvar(template)">
+          Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #confirm="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          Deletando Evento
+        </h4>
+        <button type="button" class="close pull-right" (click)="confirm.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{bodyDeletarEvento}}</p>
+      </div>
+      <div class="modal-footer btn-group d-flex">
+        <button type="button" class="btn btn-outline-primary" (click)="confirm.hide()">
+          CANCELAR
+        </button>
+        <button type="button" class="btn btn-outline-danger" (click)="confirmeDelete(confirm)">
+          DELETAR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
