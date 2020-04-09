@@ -14,6 +14,10 @@
 
 https://www.linkedin.com/in/marcio-biason-8a081010b/
 
+# Email
+
+- marciobiason333@gmail.com
+
 - Qualquer duvida, estou a disposição para esclarecimento.
 - Agradecido pela oportunidade.
 - Atenciosamente.
