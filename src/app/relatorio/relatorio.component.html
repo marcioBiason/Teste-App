@@ -2,17 +2,9 @@
 <div class="d-flex">
   <div class="form-inline mr-auto">
     <div class="form-group mb-2">
-      <input type="text" class="form-control mr-2" placeholder="Nome" [(ngModel)]="filtroNome">
+      <input type="text" class="form-control mr-2" placeholder="Nome" [(ngModel)]="nomeFiltro">
 
-      <div class="form-inline mr-auto">
-        <select [(ngModel)]="selectedOption">
-          <option *ngFor="let o of options">
-            {{o.name}}
-          </option>
-        </select>
-      </div>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-success" (click)="filtrarAtivos()">Filtrar</button>
+      <button class="btn btn-outline-success" (click)="filtrarPorNome(nomeFiltro)">Filtrar</button>
     </div>
   </div>
   <div>
@@ -30,7 +22,6 @@
       <th>Data Nascimento</th>
       <th>E-mail</th>
       <th>Sexo</th>
-      <th>Ativo</th>
       <th>Editar</th>
       <th>Excluir</th>
     </tr>
@@ -41,8 +32,7 @@
       <td>{{usuario.nome}}</td>
       <td>{{usuario.dataNascimento | DateTimeFormatPipe}}</td>
       <td>{{usuario.email}}</td>
-      <td>{{usuario.sexoId}}</td>
-      <td>{{usuario.ativo == true ? 'Ativo' : 'Inativo'}}</td>
+      <td>{{usuario.sexo}}</td>
       <td>
         <div class="btn-group">
           <button class="btn btn-sm btn-primary" tooltip="Editar" (click)="editarUsuario(usuario, template)">
@@ -59,7 +49,7 @@
       </td>
     </tr>
   </tbody>
-  <tfoot *ngIf="!usuarios.length">
+  <tfoot *ngIf="!usuarios">
     <tr>
       <td colspan="7" class="text-center">
         <h4>
@@ -94,7 +84,8 @@
             </div>
             <div class="form-group col-md-4">
               <label>Data Nascimento</label>
-              <input type="date" class="form-control"
+              <input type="text" class="form-control" bsDatepicker value="{{dataNascimento | DateTimeFormatPipe}}"
+                [(ngModel)]="dataNascimento" [bsConfig]="{ dateInputFormat : 'DD/MM/YYYY hh:mm' }"
                 [ngClass]="{'is-invalid': registerForm.get('dataNascimento').errors && registerForm.get('dataNascimento').touched}"
                 formControlName="dataNascimento" placeholder="Insira a Data Nascimento">
               <div class="invalid-feedback">
@@ -125,16 +116,8 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>Sexo</label>
-              <select id="sexo" class="form-control">
-                <option value="1">Masculino</option>
-                <option value="4">Feminino</option>
-              </select>
-            </div>
-            <div *ngIf="modoSalvar == 'put'" class="form-group col-md-6">
-              <label>Ativo</label>
-              <select id="ativo" class="form-control">
-                <option value="true">Ativo</option>
-                <option value="false">Inativo</option>
+              <select class="form-control" id="sexo" formControlName="sexo">
+                <option *ngFor="let sexo of sexos" [value]="sexo.descricao">{{ sexo.descricao }}</option>
               </select>
             </div>
           </div>

@@ -13,24 +13,19 @@ export class UsuarioService {
 
   constructor(
     private http: HttpClient,
-  ) {
-    this.headers = new HttpHeaders({
-      //'Content-Type' : 'application/x-www-form-urlencoded'
-    });
-    this.option = { headers: this.headers };
-  }
+  ) { }
 
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.baseUrl);
   }
-  getUsuariosAtivos(ativo: boolean): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.baseUrl}/GetUsuariosAtivos/${ativo}`);
+  getUsuariosFiltro(nome: string): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.baseUrl}/GetByName/${nome}`);
   }
   postUsuario(usuario: Usuario) {
     return this.http.post(this.baseUrl, usuario, this.option);
   }
   putUsuario(usuario: Usuario) {
-    return this.http.put(`${this.baseUrl}/GetById/${usuario.userId}`, usuario);
+    return this.http.put(`${this.baseUrl}?id=${usuario.userId}`, usuario);
   }
   deleteUsuario(id: number) {
     return this.http.delete(`${this.baseUrl}/?id=${id}`);

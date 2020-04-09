@@ -1,4 +1,4 @@
-import { Sexo } from './Sexo';
+
 
 export interface Usuario {
 
@@ -7,7 +7,5 @@ export interface Usuario {
   dataNascimento: Date;
   email: string;
   senha: string;
-  ativo: boolean;
-  sexoId: number;
-  sexo: Sexo[];
+  sexo: string;
 }

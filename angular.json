@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Teste-App": {
+    "Younder-APP": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Teste-App",
+            "outputPath": "dist/Younder-APP",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Teste-App:build"
+            "browserTarget": "Younder-APP:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Teste-App:build:production"
+              "browserTarget": "Younder-APP:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Teste-App:build"
+            "browserTarget": "Younder-APP:build"
           }
         },
         "test": {
@@ -111,15 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Teste-App:serve"
+            "devServerTarget": "Younder-APP:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Teste-App:serve:production"
+              "devServerTarget": "Younder-APP:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "Teste-App"
+  "defaultProject": "Younder-APP"
 }
