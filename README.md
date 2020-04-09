@@ -2,7 +2,18 @@
 
 - Front-end criado em Angular 8;
 - BootStrap;
-- Tem dependencia da API;
+- Tem dependencia da API (Younder-BFF);
 
-Qualquer duvida, estou a disposição para esclarecimento.
-Atenciosamente
+# Para testar
+
+- npm update
+
+- ng s -o
+
+# Linkedin
+
+https://www.linkedin.com/in/marcio-biason-8a081010b/
+
+- Qualquer duvida, estou a disposição para esclarecimento.
+- Agradecido pela oportunidade.
+- Atenciosamente.
